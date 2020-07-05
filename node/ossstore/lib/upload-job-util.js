@@ -22,7 +22,7 @@ module.exports = {
   completeMultipartUpload: completeMultipartUpload,
 
   computeMaxConcurrency: computeMaxConcurrency,
-
+  getBigFileMd5: util.getBigFileMd5,
   checkFileHash: util.checkFileHash,
   printPartTimeLine: util.printPartTimeLine
 };

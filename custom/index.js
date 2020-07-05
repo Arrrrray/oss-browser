@@ -14,7 +14,7 @@ module.exports= {
   },
 
   //logo png 格式, 主要用于mac和linux系统
-  logo_png: path.join(__dirname, './icon.png'),
+  logo_png: path.join(__dirname, './sparrow_48.png'),
 
   //logo icns 格式，主要用于mac系统
   logo_ico: path.join(__dirname, './icon.icns'),

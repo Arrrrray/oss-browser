@@ -108,6 +108,30 @@ angular.module('web')
         set: function (v) {
           return localStorage.setItem('uploadAndDownloadRetryTimes', v);
         }
+      },
+      sparrowCallbackUrl: {
+        get: function () {
+          return localStorage.getItem('sparrowCallbackUrl') || 'https://backend5.dongyouliang.com/api/sparrow_image/callback/';
+        },
+        set: function (v) {
+          return localStorage.setItem('sparrowCallbackUrl', v);
+        }
+      },
+      sparrowBatch: {
+        get: function () {
+          return parseInt(localStorage.getItem('sparrowBatch') || 0);
+        },
+        set: function (v) {
+          return localStorage.setItem('sparrowBatch', v);
+        }
+      },
+      sparrowBatchSize: {
+        get: function () {
+          return parseInt(localStorage.getItem('sparrowBatchSize') || 50);
+        },
+        set: function (v) {
+          return localStorage.setItem('sparrowBatchSize', v);
+        }
       }
     };
   }]);
