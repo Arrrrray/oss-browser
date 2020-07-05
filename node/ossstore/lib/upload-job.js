@@ -17,8 +17,6 @@ var isLogInfo = localStorage.getItem('logFileInfo')|| 0;
 var log = require('electron-log');
 
 var { ipcRenderer} = require('electron');
-const { ___udivdi3 } = require('../../crc64/pure-js/crc');
-const { transformFromAst } = require('babel-core');
 
 class UploadJob extends Base {
 
