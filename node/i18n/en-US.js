@@ -455,4 +455,11 @@ module.exports = {
 
   'goto.create.role': 'Go to create a role',
 
+  //sparrow
+  'sparrow': 'sparrow',
+  'settings.sparrowCallbackServer': 'Sparrow Callback URL',
+  'settings.subtitle.sparrow': 'Sparrow Settings',
+  'settings.sparrowBatch': 'Sparrow Callback Batch',
+  'settings.sparrowBatchSize': "Sparrow Callback Batch Size",
+  'sparrowClearCallback': 'Sparrow Clear Callback Timer'
 }

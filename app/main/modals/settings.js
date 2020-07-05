@@ -17,7 +17,10 @@ angular.module('web')
         logFileInfo: settingsSvs.logFileInfo.get(),
         connectTimeout: settingsSvs.connectTimeout.get(),
         uploadPartSize: settingsSvs.uploadPartSize.get(),
-        uploadAndDownloadRetryTimes: settingsSvs.uploadAndDownloadRetryTimes.get()
+        uploadAndDownloadRetryTimes: settingsSvs.uploadAndDownloadRetryTimes.get(),
+        sparrowCallbackUrl:settingsSvs.sparrowCallbackUrl.get(),
+        sparrowBatch:settingsSvs.sparrowBatch.get(),
+        sparrowBatchSize:settingsSvs.sparrowBatchSize.get()
       },
       reg: {
         email: Const.REG.EMAIL

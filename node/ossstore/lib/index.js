@@ -129,11 +129,11 @@ OssStore.prototype.setStsToken = function (stsToken) {
  *    options.checkPoints {object} saveCpt
  *    options.enableCrc64 {boolean}
  */
-OssStore.prototype.createUploadJob = function createUploadJob(options) {
+OssStore.prototype.createUploadJob = function createUploadJob(options,Toast) {
 
   var self = this;
 
-  var job = new UploadJob(self.oss, options);
+  var job = new UploadJob(self.oss, options,Toast);
 
   //默认是 waiting 状态
   return job;

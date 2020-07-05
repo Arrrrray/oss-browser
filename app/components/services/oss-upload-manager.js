@@ -305,7 +305,7 @@ angular.module('web')
             cname: cname
           });
         }
-        return store.createUploadJob(opt);
+        return store.createUploadJob(opt,Toast);
         // {
         //   region: opt.region,
         //   from: opt.from,

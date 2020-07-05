@@ -12,7 +12,48 @@
   <div class="modal-body">
 
     <fieldset>
-      <legend><h5 class="text-primary">{{'settings.subtitle.updown'|translate}}</h5></legend>
+      <legend>
+        <h5 class="text-primary">{{'settings.subtitle.sparrow'|translate}}</h5>
+      </legend>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">
+          {{'settings.sparrowCallbackServer'|translate}}:
+        </label>
+        <div class="col-sm-7">
+          <input type="text" name="sparrowCallbackUrl" ng-model="set.sparrowCallbackUrl"
+            ng-change="setChange(form1,'sparrowCallbackUrl')" required class=" form-control" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-4 control-label">
+          {{'settings.sparrowBatch'|translate}}:
+        </label>
+        <div class="col-sm-7">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="sparrowBatch" ng-model="set.sparrowBatch" ng-disabled="true"
+                ng-change="setChange(form1,'sparrowBatch')" ng-true-value="1" ng-false-value="0" />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">
+          {{'settings.sparrowBatchSize'|translate}}:
+        </label>
+        <div class="col-sm-7">
+          <input type="number" name="sparrowBatchSize" ng-model="set.sparrowBatchSize" ng-disabled="true"
+            ng-change="setChange(form1,'sparrowBatchSize')" value="50" max="100" min="10" required class=" form-control" />
+        </div>
+      </div>
+      
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <h5 class="text-primary">{{'settings.subtitle.updown'|translate}}</h5>
+      </legend>
       <div class="form-group">
         <label class="col-sm-4 control-label">
         <!-- 最大上传任务数: -->
