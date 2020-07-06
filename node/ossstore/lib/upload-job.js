@@ -153,7 +153,11 @@ UploadJob.prototype.deleteOssFile = function(){
    });
 };
 
-UploadJob.prototype._sparrowCallback=function(bk,key,filePath){
+UploadJob.prototype._sparrowCallback=function(to,from){
+    let bk=to.bucket
+    let image_path=to.key
+    let unique_name=from.name
+    let filePath=from.path
     // //这段注释掉的代码是用来获取带时间戳的http下载url的
     // var img_url = self.oss.getSignedUrl('getObject', {
     //     Bucket: self.to.bucket,
@@ -173,23 +177,19 @@ UploadJob.prototype._sparrowCallback=function(bk,key,filePath){
         // console.info('check md5 success: file['+filePath+'],'+md5str)
         let callbackURL = localStorage.getItem('sparrowCallbackUrl') || 'https://backend5.dongyouliang.com/api/sparrow_image/callback/';
     
-        //对数据进行清理
-        let image_path=key;
-        let unique_name=key.lastIndexOf("/");
-        if (unique_name>0)
-          unique_name=key.substring(unique_name+1);
-        else
-          unique_name=key;
 
         // 把md5串放入到unique_name中
         let _ext=unique_name.lastIndexOf(".")
         if (_ext>0){
-           unique_name=unique_name.substring(0,_ext)+"_"+md5str+unique_name.substring(_ext)
+           unique_name=unique_name.substring(0,_ext)+"_"+md5str
         }
         else
            unique_name=unique_name+"_"+md5str;
-        if (bk == 'static-hg' && key.startsWith("media/")) 
-          image_path=key.substring(6)
+
+        if (bk == 'static-hg' && image_path.startsWith("media/")) 
+          image_path=image_path.substring(6)
+        else
+          image_path="/"+bk+image_path
 
         $.ajax({
           url: callbackURL,
@@ -246,8 +246,9 @@ UploadJob.prototype._changeStatus = function(status, retryTimes){
   // // 不批量，单独回调
   // if ((localStorage.getItem('sparrowBatch') || 0)==0)
     if (status=='finished'){
-      
-      self._sparrowCallback(self.to.bucket,self.to.key,self.from.path)
+      console.log(self.to)
+      console.log(self.from)
+      self._sparrowCallback(self.to,self.from)
     }
 };
 
