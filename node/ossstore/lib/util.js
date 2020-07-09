@@ -118,7 +118,7 @@ function getBigFileMd5(p, fn){
        md5sum.update(chunk);
    });
    stream.on('end', function() {
-     str = md5sum.digest('base64');
+     str = md5sum.digest('hex');
      console.timeEnd('get md5 hash for ['+p+']');
      fn(null, str);
    });

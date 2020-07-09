@@ -72,7 +72,7 @@ class UploadJob extends Base {
     this.stopFlag = this.status!='running';
     this.checkPoints = this._config.checkPoints;
     this.crc64Str = this._config.crc64Str;
-
+   
     //console.log('created upload job');
     this.maxConcurrency = 5;
   }
@@ -169,10 +169,7 @@ UploadJob.prototype._sparrowCallback=function(to,from){
     //   img_url=img_url.substring(0,img_idx);
     // console.log(self.to.bucket,img_url);
     self=this;
-    util.getBigFileMd5(filePath, function (err,md5str) {
-      if (err) {
-      self.toast.error('Checking md5 failed: ' + err.message);
-      } else{
+
         
         // console.info('check md5 success: file['+filePath+'],'+md5str)
         let callbackURL = localStorage.getItem('sparrowCallbackUrl') || 'https://backend5.dongyouliang.com/api/sparrow_image/callback/';
@@ -181,15 +178,14 @@ UploadJob.prototype._sparrowCallback=function(to,from){
         // 把md5串放入到unique_name中
         let _ext=unique_name.lastIndexOf(".")
         if (_ext>0){
-           unique_name=unique_name.substring(0,_ext)+"_"+md5str
+           unique_name=unique_name.substring(0,_ext)
         }
-        else
-           unique_name=unique_name+"_"+md5str;
+       
 
         if (bk == 'static-hg' && image_path.startsWith("media/")) 
           image_path=image_path.substring(6)
         else
-          image_path="/"+bk+image_path
+          image_path="/"+bk+"/"+image_path
 
         $.ajax({
           url: callbackURL,
@@ -222,8 +218,7 @@ UploadJob.prototype._sparrowCallback=function(to,from){
             }
           }
         });
-      }
-    });
+     
     
 }
 
@@ -246,8 +241,8 @@ UploadJob.prototype._changeStatus = function(status, retryTimes){
   // // 不批量，单独回调
   // if ((localStorage.getItem('sparrowBatch') || 0)==0)
     if (status=='finished'){
-      console.log(self.to)
-      console.log(self.from)
+      // console.log(self.to)
+      // console.log(self.from)
       self._sparrowCallback(self.to,self.from)
     }
 };
@@ -362,6 +357,7 @@ UploadJob.prototype.uploadSingle = function () {
       ContentType: mime.lookup(self.from.path)
     };
 
+    console.log(params)
 
     self.prog = {
       loaded: 0,

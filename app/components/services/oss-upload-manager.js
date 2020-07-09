@@ -6,6 +6,7 @@ angular.module('web')
       var fs = require('fs');
       var path = require('path');
       var os = require('os');
+      var uploadutils=require('./node/ossstore/lib/upload-job-util')
 
       var stopCreatingFlag = false;
 
@@ -244,23 +245,38 @@ angular.module('web')
 
           } else {
             //文件
-            var job = createJob(authInfo, {
-              region: bucketInfo.region,
-              from: {
-                name: fileName,
-                path: absPath
-              },
-              to: {
-                bucket: bucketInfo.bucket,
-                key: filePath
+            uploadutils.getBigFileMd5(absPath, function (err, md5str) {
+              if (err) {
+                Toast.error('获得md5失败')
               }
+              else {
+                console.log(md5str);
+                let _ext = filePath.lastIndexOf(".")
+                if (_ext > 0) {
+                  filePath = filePath.substring(0, _ext) + "_" + md5str + filePath.substring(_ext)
+                }
+                else
+                  filePath = filePath + "_" + md5str;
+              }
+              // console.log(filePath)
+              var job = createJob(authInfo, {
+                region: bucketInfo.region,
+                from: {
+                  name: fileName,
+                  path: absPath
+                },
+                to: {
+                  bucket: bucketInfo.bucket,
+                  key: filePath
+                }
+              });
+
+              addEvents(job);
+
+              $timeout(function () {
+                callFn([job]);
+              }, 1);
             });
-
-            addEvents(job);
-
-            $timeout(function () {
-              callFn([job]);
-            }, 1);
 
           }
         }
