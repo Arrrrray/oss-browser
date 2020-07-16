@@ -33,7 +33,7 @@ build:
 	node gen.js
 
 win64:
-	$(BUILD) --platform=win32 --arch=x64 --icon=$(CUSTOM)/icon.ico
+	$(BUILD) --platform=win32 --arch=x64
 	cp -rf $(CUSTOM) build/$(NAME)-win32-x64/resources
 	rm -rf releases/$(VERSION)/$(NAME)-win32-x64.zip && mkdir -p releases/$(VERSION)
 	cd build && $(ZIP) ../releases/$(VERSION)/$(NAME)-win32-x64.zip $(NAME)-win32-x64/

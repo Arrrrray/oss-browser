@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports= {
   //窗体title
-  title: 'OSS Browser',
+  title: 'Sparrow OSS Browser',
 
   //app id，打包名称前缀
   appId: 'oss-browser',

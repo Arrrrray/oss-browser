@@ -9,7 +9,10 @@
     "postbuild": "node gen",
     "prod": "./node_modules/.bin/cross-env NODE_ENV=production cd dist && electron .",
     "watch": "./node_modules/.bin/gulp watch --custom=$custom",
-    "build": "./node_modules/.bin/gulp build --custom=$custom"
+    "build": "./node_modules/.bin/gulp build --custom=$custom",
+    "postinstall": "electron-builder install-app-deps",
+    "dist-win": "./node_modules/.bin/electron-builder --win --x64",
+    "pack-win": " electron-builder --dir  --win --x64"
   },
   "engines": {
     "node": "12.16.1"
@@ -66,5 +69,14 @@
     "nodemailer": "4.0.1",
     "nodemailer-smtp-transport": "2.7.4",
     "request": "^2.83.0"
+  },
+  "build":{
+    "appId": "oss-browser",
+    "files": [
+      "dist/**"
+    ],   
+    "win": {
+      "target": ["zip"]
+    }
   }
 }

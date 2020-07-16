@@ -22,7 +22,7 @@
           <!-- 最后修改时间 -->
           {{'lastModifyTime'|translate}}
         </th>
-        <th class="text-right">
+        <th class="text-right" style="display:none">
           <!-- 操作 -->
           {{'actions'|translate}}
           &nbsp;</th>
@@ -69,7 +69,7 @@
           <span ng-if="item.isFolder!=true">{{item.size|sizeFormat}}</span>
         </td>
         <td>{{item.lastModified|timeFormat}}</td>
-        <td align="right">
+        <td align="right" style="display:none">
           <!-- <a href="" ng-if="item.isFolder!=true" ng-click="showPreview(item);$event.stopPropagation()">预览</a> -->
           <!-- <a href="" ng-if="item.isFolder==true" ng-click="goIn(currentBucket,item.path);$event.stopPropagation()">进入</a>
         | -->

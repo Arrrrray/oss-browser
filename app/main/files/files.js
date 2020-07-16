@@ -168,58 +168,58 @@ angular.module('web')
           }, function(){
             return $scope.sel.has
           }],
-          [function(){
-            //copy
-            return '<i class="fa fa-clone text-primary"></i> ' + T('copy')
-          }, function ($itemScope, $event) {
-            showMove($scope.sel.has, true)
-          }, function(){
-            return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
-          }],
+          // [function(){
+          //   //copy
+          //   return '<i class="fa fa-clone text-primary"></i> ' + T('copy')
+          // }, function ($itemScope, $event) {
+          //   showMove($scope.sel.has, true)
+          // }, function(){
+          //   return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
+          // }],
 
-          [function(){
-            //move
-            return '<i class="fa fa-cut text-primary"></i> ' + T('move')
-          }, function ($itemScope, $event) {
-            showMove($scope.sel.has)
-          }, function(){
-            return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
-          }],
-
-
-          [function(){
-            return '<i class="fa fa-edit text-info"></i> ' + T('rename')
-          }, function ($itemScope, $event) {
-            showRename($scope.sel.has[0])
-          }, function(){
-            return $scope.sel.has && ($scope.sel.has.length==1) && $scope.currentAuthInfo.privilege!='readOnly' && $scope.sel.has[0].storageClass!='Archive';
-          }],
-
-          [function(){
-            return '<i class="fa fa-shield text-success"></i> ' + T('acl')
-          }, function ($itemScope, $event) {
-            showACL($scope.sel.has[0])
-          }, function(){
-            return $scope.sel.has && $scope.sel.has.length==1 && !$scope.sel.has[0].isFolder && $scope.currentAuthInfo.privilege!='readOnly';
-          }],
+          // [function(){
+          //   //move
+          //   return '<i class="fa fa-cut text-primary"></i> ' + T('move')
+          // }, function ($itemScope, $event) {
+          //   showMove($scope.sel.has)
+          // }, function(){
+          //   return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
+          // }],
 
 
-          [function(){
-            return '<i class="fa fa-shield text-warning"></i> ' + T('simplePolicy')
-          }, function ($itemScope, $event) {
-            showGrant($scope.sel.has)
-          }, function(){
-            return $scope.sel.has && $scope.currentAuthInfo.id.indexOf('STS.')!=0;
-          }],
+          // [function(){
+          //   return '<i class="fa fa-edit text-info"></i> ' + T('rename')
+          // }, function ($itemScope, $event) {
+          //   showRename($scope.sel.has[0])
+          // }, function(){
+          //   return $scope.sel.has && ($scope.sel.has.length==1) && $scope.currentAuthInfo.privilege!='readOnly' && $scope.sel.has[0].storageClass!='Archive';
+          // }],
 
-          [function(){
-            //生成授权码
-            return '<i class="fa fa-shield text-success"></i> ' + T('genAuthToken')
-          }, function ($itemScope, $event) {
-            showGrantToken($scope.sel.has[0])
-          }, function(){
-            return $scope.sel.has && $scope.sel.has.length==1 && $scope.sel.has[0].isFolder && $scope.currentAuthInfo.id.indexOf('STS.')!=0;
-          }],
+          // [function(){
+          //   return '<i class="fa fa-shield text-success"></i> ' + T('acl')
+          // }, function ($itemScope, $event) {
+          //   showACL($scope.sel.has[0])
+          // }, function(){
+          //   return $scope.sel.has && $scope.sel.has.length==1 && !$scope.sel.has[0].isFolder && $scope.currentAuthInfo.privilege!='readOnly';
+          // }],
+
+
+          // [function(){
+          //   return '<i class="fa fa-shield text-warning"></i> ' + T('simplePolicy')
+          // }, function ($itemScope, $event) {
+          //   showGrant($scope.sel.has)
+          // }, function(){
+          //   return $scope.sel.has && $scope.currentAuthInfo.id.indexOf('STS.')!=0;
+          // }],
+
+          // [function(){
+          //   //生成授权码
+          //   return '<i class="fa fa-shield text-success"></i> ' + T('genAuthToken')
+          // }, function ($itemScope, $event) {
+          //   showGrantToken($scope.sel.has[0])
+          // }, function(){
+          //   return $scope.sel.has && $scope.sel.has.length==1 && $scope.sel.has[0].isFolder && $scope.currentAuthInfo.id.indexOf('STS.')!=0;
+          // }],
 
           [function(){
             //获取地址
@@ -228,24 +228,25 @@ angular.module('web')
              showAddress($scope.sel.has[0])
           }, function(){
             return $scope.sel.has && $scope.sel.has.length==1 && !$scope.sel.has[0].isFolder && $scope.currentAuthInfo.id.indexOf('STS.')!=0;
-          }],
-
-          [function(){
-            //Http头
-            return '<i class="fa fa-cog"></i> ' + T('http.headers')
-          }, function ($itemScope, $event) {
-            showHttpHeaders($scope.sel.has[0])
-          }, function(){
-            return $scope.sel.has && $scope.sel.has.length==1 && !$scope.sel.has[0].isFolder;
-          }],
-
-          [function(){
-            return '<i class="fa fa-remove text-danger"></i> ' + T('delete')
-          }, function ($itemScope, $event) {
-            showDeleteFilesSelected();
-          }, function(){
-            return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
           }]
+          // ,
+
+          // [function(){
+          //   //Http头
+          //   return '<i class="fa fa-cog"></i> ' + T('http.headers')
+          // }, function ($itemScope, $event) {
+          //   showHttpHeaders($scope.sel.has[0])
+          // }, function(){
+          //   return $scope.sel.has && $scope.sel.has.length==1 && !$scope.sel.has[0].isFolder;
+          // }],
+
+          // [function(){
+          //   return '<i class="fa fa-remove text-danger"></i> ' + T('delete')
+          // }, function ($itemScope, $event) {
+          //   showDeleteFilesSelected();
+          // }, function(){
+          //   return $scope.sel.has && $scope.currentAuthInfo.privilege!='readOnly'
+          // }]
         ];
       };
       $scope.bucketSpacerMenuOptions = [

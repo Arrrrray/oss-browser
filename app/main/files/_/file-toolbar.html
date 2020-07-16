@@ -46,14 +46,13 @@
         <!-- 下载 -->
         {{'download'|translate}}
       </button>
-
+<!--
       <button type="button" class="btn btn-default btn-sm"
       ng-disabled="!sel.has || currentAuthInfo.privilege=='readOnly'" ng-click="showMove(sel.has, true)">
       <i class="fa fa-clone text-primary"></i>
-        <!-- 复制 -->
         {{'copy'|translate}}
       </button>
-
+-->
 
     </div>
 
@@ -65,11 +64,11 @@
         <span class="sr-only">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu" role="menu">
+      <!--
         <li>
-          <!-- && sel.has.length === 1 -->
           <a href="" class="" ng-if="sel.has  && currentAuthInfo.privilege!='readOnly'" ng-click="showMove(sel.has)">
             <i class="fa fa-cut text-primary"></i>
-            <!-- 移动 -->
+       
             {{'move'|translate}}
           </a>
         </li>
@@ -77,7 +76,7 @@
           <a href="" ng-if="(sel.has.length==1) && currentAuthInfo.privilege!='readOnly' && sel.has[0].storageClass!='Archive'"
           ng-click="showRename(sel.has[0])">
             <i class="fa fa-edit text-info"></i>
-            <!-- 重命名 -->
+
             {{'rename'|translate}}
           </a>
         </li>
@@ -88,7 +87,6 @@
             ng-click="showACL(sel.has[0])">
             <i class="fa fa-shield text-success"></i>
             {{'acl'|translate}}
-            <!-- ACL权限 -->
           </a>
         </li>
 
@@ -98,7 +96,6 @@
             ng-click="showGrant(sel.has)">
             <i class="fa fa-shield text-warning"></i>
             {{'simplePolicy'|translate}}
-            <!-- 简化Policy授权 -->
           </a>
         </li>
         <li>
@@ -106,23 +103,21 @@
             ng-class="{'text-success':sel.has}"
             ng-click="showGrantToken(sel.has[0])">
             <i class="fa fa-shield text-success"></i>
-            <!-- 生成授权码 -->
             {{'genAuthToken'|translate}}
           </a>
         </li>
-
+-->
         <li>
           <a href="" ng-if="sel.has.length==1 && !sel.has[0].isFolder && currentAuthInfo.id.indexOf('STS.')!=0" ng-click="showAddress(sel.has[0])">
             <i class="fa fa-download"></i>
-            <!-- 获取地址 -->
             {{'getAddress'|translate}}
           </a>
         </li>
-
+<!--
         <li>
           <a href="" ng-if="sel.has.length==1 && !sel.has[0].isFolder" ng-click="showHttpHeaders(sel.has[0])">
             <i class="fa fa-cog"></i>
-            <!-- Http头 -->
+    
             {{'http.headers'|translate}}
           </a>
         </li>
@@ -130,7 +125,7 @@
         <li>
           <a href="" ng-if="sel.has && !sel.has[0].isFolder" ng-click="showRestoreBatch()">
             <i class="fa fa-hourglass-2"></i>
-            <!-- 恢复 -->
+  
             {{'restore'|translate}}
           </a>
         </li>
@@ -139,9 +134,10 @@
           <a href="" class="" ng-if="sel.has && currentAuthInfo.privilege!='readOnly'" ng-click="showDeleteFilesSelected()">
             <i class="fa fa-remove text-danger"></i>
             {{'delete'|translate}}
-            <!-- 删除 -->
+      
           </a>
         </li>
+-->        
       </ul>
 
     </div>
