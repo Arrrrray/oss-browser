@@ -49,7 +49,8 @@
        <tr><th>{{'username'|translate}}/{{'displayName'|translate}}</th>
          <th>{{'comments'|translate}}</th>
          <th>{{'lastModifyTime'|translate}}</th>
-         <th>{{'actions'|translate}}</th></tr>
+       <!--  <th>{{'actions'|translate}}</th> -->
+       </tr>
        <tr ng-repeat="item in items|filter:sch.txt">
          <td>
            <a href="" ng-click="showUpdate(item)">{{item.UserName}}</a>
@@ -57,11 +58,13 @@
          </td>
          <td>{{item.Comments|sub:30}}</td>
          <td>{{item.UpdateDate|timeFormat}}</td>
+         <!--
          <td>
            <a href="" class="text-primary" ng-click="showUpdate(item)">{{'update'|translate}}</a> |
             <a href="" class="text-primary" ng-click="showAK(item)">{{'aks'|translate}}</a> |
             <a href="" class="text-danger" ng-click="showRemove(item)">{{'delete'|translate}}</a>
          </td>
+         -->
        </tr>
     </table>
 

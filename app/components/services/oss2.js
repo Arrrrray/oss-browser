@@ -1330,6 +1330,7 @@ angular.module('web')
           var t = [];
 
           var opt = {};
+          console.log("~~~~~~~~~");
           _dig();
 
           function _dig() {
@@ -1345,6 +1346,8 @@ angular.module('web')
               //bucket
               if (result['Buckets']) {
                 result['Buckets'].forEach(function (n) {
+                  console.log(n.Name);
+                  if (n.Name==="static-hg"){
                   n.creationDate = n.CreationDate;
                   n.region = n.Location;
                   n.name = n.Name;
@@ -1355,8 +1358,10 @@ angular.module('web')
 
                   n.isBucket = true;
                   n.itemType = 'bucket';
+                  t = t.concat([n]);
+                  }
                 });
-                t = t.concat(result['Buckets']);
+                
               }
               // resolve(t);
               // console.log(result)
