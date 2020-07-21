@@ -1330,7 +1330,7 @@ angular.module('web')
           var t = [];
 
           var opt = {};
-          console.log("~~~~~~~~~");
+
           _dig();
 
           function _dig() {

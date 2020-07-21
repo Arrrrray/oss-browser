@@ -94,21 +94,33 @@ angular.module('web')
         var maxConcurrency = settingsSvs.maxUploadJobCount.get();
         //console.log(concurrency , maxConcurrency);
         concurrency = Math.max(0, concurrency);
+        var waitingcnt=0;
         if (concurrency < maxConcurrency) {
           var arr = $scope.lists.uploadJobList;
           for (var i = 0; i < arr.length; i++) {
             if (concurrency >= maxConcurrency) return;
-
+           
             var n = arr[i];
             if (n.status == 'waiting') {
               n.start();
+              waitingcnt++;
               concurrency++;
             }
-
+          }
+          // 如果没有等待的任务检查failed的任务，会连续尝试一次
+          if (waitingcnt==0){
+            var arr = $scope.lists.uploadJobList;
+          for (var i = 0; i < arr.length; i++) {
+            if (concurrency >= maxConcurrency) return;
+            var n = arr[i];            
+            if (n.status=='failed' && n.retryCount<=0){
+                n.start();
+                concurrency++;
+            }            
           }
         }
       }
-
+    }
       function checkNeedRefreshFileList(bucket, key) {
 
         if ($scope.currentInfo.bucket == bucket) {
@@ -250,7 +262,7 @@ angular.module('web')
                 Toast.error('获得md5失败')
               }
               else {
-                console.log(md5str);
+                // console.log(md5str);
                 let _ext = filePath.lastIndexOf(".")
                 if (_ext > 0) {
                   filePath = filePath.substring(0, _ext) + "_" + md5str + filePath.substring(_ext)

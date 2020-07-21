@@ -172,5 +172,5 @@ function parseOssPath(osspath) {
 }
 
 function getRetryTimes() {
-  return localStorage.getItem('uploadAndDownloadRetryTimes') || 10
+  return localStorage.getItem('uploadAndDownloadRetryTimes') || 3
 }

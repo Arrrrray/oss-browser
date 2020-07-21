@@ -12,7 +12,7 @@ function($scope ,$translate,ossUploadManager,ossDownloadManager, Toast, safeAppl
      totalProg: {loaded:0,total:0},
      totalNum: {running:0,total:0,  upDone: 0, downDone: 0,
         upFailed: 0, upStopped: 0,
-        downFailed: 0, downStopped: 0},
+        downFailed: 0, downStopped: 0,upRunning:0},
      calcTotalProg: calcTotalProg,
 
      transTab: 1,
@@ -24,6 +24,8 @@ function($scope ,$translate,ossUploadManager,ossDownloadManager, Toast, safeAppl
    $scope.handlers.uploadFilesHandler = uploadFilesHandler;
 
    $scope.handlers.downloadFilesHandler = downloadFilesHandler;
+
+   $scope.handlers.calcTotalProgUp = calcTotalProgUp;
 
    ossUploadManager.init($scope);
    ossDownloadManager.init($scope);
@@ -66,20 +68,38 @@ function($scope ,$translate,ossUploadManager,ossDownloadManager, Toast, safeAppl
 
 
 
-
+   function calcTotalProgUp(){
+    var c=0;
+    angular.forEach($scope.lists.uploadJobList,function(n){
+      if(n.status=='running'){
+        c++;
+      }
+      if(n.status=='waiting'){
+        c++;
+      }
+      if(n.status=='verifying'){
+        c++;
+      }
+    });
+    return c;
+   }
    function calcTotalProg(){
        var c=0, c2=0;
        var cf=0, cs=0;
        var cf2=0, cs2=0;
+       var cr=0;
        angular.forEach($scope.lists.uploadJobList,function(n){
          if(n.status=='running'){
            c++;
+           cr++;
          }
          if(n.status=='waiting'){
            c++;
+           cr++;
          }
          if(n.status=='verifying'){
            c++;
+           cr++;
          }
          if(n.status=='failed'){
            cf++;
@@ -104,7 +124,8 @@ function($scope ,$translate,ossUploadManager,ossDownloadManager, Toast, safeAppl
            cs2++;
          }
        });
-      //  $scope.totalNum.upRunning = c;
+       $scope.totalNum.upRunning = cr;
+       console.log("----->",$scope.totalNum.upRunning);
       //  $scope.totalNum.downRunning = c;
        $scope.totalNum.running= c + c2;
 
