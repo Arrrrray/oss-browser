@@ -8,7 +8,9 @@ var util = require('./upload-job-util');
 var isDebug = process.env.NODE_ENV=='development';
 var mime = require('mime');
 var commonUtil = require('./util');
-var RETRYTIMES = commonUtil.getRetryTimes();
+// wangbl11@qq.com: 关闭retrying，出错后直接停止
+// var RETRYTIMES = commonUtil.getRetryTimes();
+var RETRYTIMES = -1;
 
 // isLog==1 open else close
 var isLog = localStorage.getItem('logFile') || 0;
@@ -60,6 +62,10 @@ class UploadJob extends Base {
     this.from = util.parseLocalPath(this._config.from);
     this.to = util.parseOssPath(this._config.to);
     this.region = this._config.region;
+    //wangbl11@qq.com: 保存到db的image字段中
+    this.httpurl="https://".concat(this._config.to.bucket,".",this._config.region,".aliyuncs.com/",this._config.to.key);
+    //失败的job重试次数
+    this.retryCount=-1;
 
     this.prog = this._config.prog || {
       loaded: 0,
@@ -154,38 +160,21 @@ UploadJob.prototype.deleteOssFile = function(){
 };
 
 UploadJob.prototype._sparrowCallback=function(to,from){
-    let bk=to.bucket
-    let image_path=to.key
-    let unique_name=from.name
-    let filePath=from.path
-    // //这段注释掉的代码是用来获取带时间戳的http下载url的
-    // var img_url = self.oss.getSignedUrl('getObject', {
-    //     Bucket: self.to.bucket,
-    //     Key: self.to.key,
-    //     Expires: 60
-    // });
-    // let img_idx=img_url.indexOf("?")
-    // if (img_idx>=0)
-    //   img_url=img_url.substring(0,img_idx);
-    // console.log(self.to.bucket,img_url);
-    self=this;
-
-        
+        let bk=to.bucket
+        let image_path=encodeURI(this.httpurl)
+        console.log(image_path)
+        let unique_name=from.name
+        let filePath=from.path
+        self=this;
+                
         // console.info('check md5 success: file['+filePath+'],'+md5str)
         let callbackURL = localStorage.getItem('sparrowCallbackUrl') || 'https://backend5.dongyouliang.com/api/sparrow_image/callback/';
     
-
         // 把md5串放入到unique_name中
         let _ext=unique_name.lastIndexOf(".")
         if (_ext>0){
            unique_name=unique_name.substring(0,_ext)
         }
-       
-
-        if (bk == 'static-hg' && image_path.startsWith("media/")) 
-          image_path=image_path.substring(6)
-        else
-          image_path="/"+bk+"/"+image_path
 
         $.ajax({
           url: callbackURL,
@@ -238,6 +227,10 @@ UploadJob.prototype._changeStatus = function(status, retryTimes){
     self.predictLeftTime=0;
   }
 
+  // wangbl11@qq.com ,设置一次
+  if(status=='failed' && self.retryCount<1){
+    self.retryCount++;
+  }
   // // 不批量，单独回调
   // if ((localStorage.getItem('sparrowBatch') || 0)==0)
     if (status=='finished'){
@@ -357,8 +350,6 @@ UploadJob.prototype.uploadSingle = function () {
       ContentType: mime.lookup(self.from.path)
     };
 
-    console.log(params)
-
     self.prog = {
       loaded: 0,
       total: Buffer.byteLength(data)
@@ -377,7 +368,7 @@ UploadJob.prototype.uploadSingle = function () {
             self.message=err.message;
             self._changeStatus('failed');
             self.emit('error', err);
-          }else{
+          }else{ //tina改了重试0次之后走不到这个分支里了
             retryTimes++;
             self._changeStatus('retrying', retryTimes);
             console.warn('put object error:', err, ', -------retrying...', `${retryTimes}/${RETRYTIMES}'`);
@@ -646,11 +637,14 @@ UploadJob.prototype.uploadMultipart = function (checkPoints) {
 
         console.warn('multiErr, upload part error:', multiErr.message||multiErr, partParams, self.from.path);
 
-        if (retries[partNumber] >= maxRetries){
+        if (retries[partNumber] >= maxRetries){ //重试0次后走入这段代码
           self.message='上传分片失败: #'+partNumber;
-
-          self.stop();
-          //self.emit('error', multiErr);
+          
+          //tina，=>以下1行注释掉的，
+          // self.stop();
+          //tina，<= 把状态直接设置为failed
+          self._changeStatus('failed');
+          self.emit('error', multiErr);
           concurrency--;
         }
         else if(multiErr.message.indexOf('The specified upload does not exist')!=-1) {
@@ -664,7 +658,7 @@ UploadJob.prototype.uploadMultipart = function (checkPoints) {
           //todo:
           //multiErr, upload part error: Error: Missing required key 'UploadId' in params
         }
-        else {
+        else { //tina: 调整重试次数为0后不会再走到这个分支中
 
           retries[partNumber]++;
           // 分片重试次数

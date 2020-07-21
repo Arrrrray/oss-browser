@@ -103,7 +103,7 @@ angular.module('web')
       },
       uploadAndDownloadRetryTimes: {
         get: function () {
-          return parseInt(localStorage.getItem('uploadAndDownloadRetryTimes') || 10);
+          return parseInt(localStorage.getItem('uploadAndDownloadRetryTimes') || 3);
         },
         set: function (v) {
           return localStorage.setItem('uploadAndDownloadRetryTimes', v);

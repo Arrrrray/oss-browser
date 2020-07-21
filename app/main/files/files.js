@@ -843,6 +843,13 @@ angular.module('web')
       var oudtid, oddtid;
 
       function showUploadDialog(isFolder) {
+
+          // 当还有正在处理的文件时，提示暂时不能下载
+          if ($scope.handlers.calcTotalProgUp()>0){
+            alert("还有正在运行的任务，请等待所有上传任务结束或失败！");
+            return;
+          }
+          
         if (oudtid) return;
         oudtid = true;
         $timeout(function () {
@@ -894,6 +901,11 @@ angular.module('web')
        */
       function handlerDrop(e) {
 
+        // 当还有正在处理的文件时，提示暂时不能下载
+        if ($scope.handlers.calcTotalProgUp()>0){
+          alert("还有正在运行的任务，请等待所有上传任务结束或失败！");
+          return;
+        }
         var files = e.originalEvent.dataTransfer.files;
         var filePaths = [];
         if (files) {
